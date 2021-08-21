@@ -1,13 +1,34 @@
 {
   "name": "tree-term-rewriting",
-  "version": "1.0.0",
-  "private": true,
+  "version": "0.0.1",
   "license": "MIT",
+  "homepage": "https://github.com/RobinKa/tree-term-rewriting",
+  "bugs": {
+    "url": "https://github.com/RobinKa/tree-term-rewriting/issues",
+    "email": "tora@warlock.ai"
+  },
+  "keywords": [
+    "term rewriting",
+    "knuth-bendix completion",
+    "symbolic math",
+    "simplification",
+    "lexicographic path ordering",
+    "pattern matching",
+    "unification",
+    "tree",
+    "aho-corack",
+    "parser",
+    "geometric algebra",
+    "typescript",
+    "trs",
+    "lpo"
+  ],
   "dependencies": {},
   "scripts": {
     "build": "npm run gen-parser && tsc",
     "test": "npm run build && mocha",
-    "gen-parser": "tspeg ./grammars/ga.peg ./src/parsing/__generated__/math.ts"
+    "gen-parser": "tspeg ./grammars/ga.peg ./src/parsing/__generated__/math.ts",
+    "pub": "node prepublish.js && npm publish"
   },
   "devDependencies": {
     "@types/chai": "^4.2.21",

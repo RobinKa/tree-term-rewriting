@@ -1,0 +1,29 @@
+name: Build Test Publish
+on: push
+
+jobs:
+  build-test-publish:
+    runs-on: ubuntu-latest
+    steps:
+      # Setup
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm install
+
+      # Build
+      - name: Build
+        run: npm run build
+
+      # Test
+      - name: Test
+        run: npm run test
+
+      # Publish if tagged
+      - name: Publish
+        if: startsWith(github.event.ref, 'refs/tags')
+        run: npm run pub
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
