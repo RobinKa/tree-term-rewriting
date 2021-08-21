@@ -1,0 +1,27 @@
+Expression := equality=Equality
+
+Equality := _ head=Additive _ tail={ op=EqualityOperator _ sm=Additive _ }*
+EqualityOperator := '=' | '>' | '<' | '>=' | '<=' | '!='
+
+Additive := _ head=Multiplicative _ tail={ op=AdditiveOperator _ sm=Multiplicative _ }*
+AdditiveOperator := '\+' | '\-'
+
+Multiplicative := _ head=FunctionApplication _ tail={ op=MultiplicativeOperator _ sm=FunctionApplication _ }*
+MultiplicativeOperator := '\*' | '\/' | '\^' | '|'
+
+FunctionApplication := _ head=Unary _ tail={ op=FunctionApplicationOperator _ sm=Unary _ }*
+FunctionApplicationOperator := '!'
+
+Unary := _ head={ op=UnaryOperator _ }* primary=Primary _
+UnaryOperator := '\-' | '~'
+
+Primary :=  _ '\(' _ expression=Expression _ '\)' _ | _ functionCall=FunctionCall _ | variable=Variable | constant=Constant
+
+FunctionCall := fn=Variable _ args=FunctionCallArgs
+FunctionCallArgs := _ '\(' _ '\)' _ | _ '\(' _ head=Expression _ tail={ Separator sm=Expression _ }* '\)' _
+Separator := _ ',' _
+
+Variable := _ name='\$?[a-zA-Z]+' _
+Constant := _ value='[0-9]+' _
+
+_ := '\s*'
